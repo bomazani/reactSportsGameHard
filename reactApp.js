@@ -39,6 +39,7 @@ class Game extends React.Component {
     super(props) 
 
       this.state = {
+        resetCount: 0,
         homeTeamStats: {
           shots: 0,
           score: 0
@@ -56,7 +57,7 @@ class Game extends React.Component {
   }
 
   shoot = (team) => {
-    const teamStatsKey = '${team}TeamStats'
+    const teamStatsKey = `${team}TeamStats`
 
     let score = this.state[teamStatsKey].score;
     this.shotSound.play();
@@ -75,13 +76,27 @@ class Game extends React.Component {
   
     setTimeout(() => {
       this.setState((state, props) => ({
-        [teamStatsKey] : {
+        [teamStatsKey]: {
         shots: state[teamStatsKey].shots + 1,
         score
         }
       }));
     }, 3000)
   };
+
+  resetGame = () => {
+    this.setState((state, props) => ({
+      resetCount: state.resetCount + 1,
+      homeTeamStats: {
+        shots: 0,
+        score: 0
+      },
+      visitingTeamStats: {
+        shots: 0,
+        score: 0
+      }
+    }))
+  }
 
   render() {
     return (
@@ -98,7 +113,8 @@ class Game extends React.Component {
           <div className="versus">
             <h1>VS</h1>
             <div>
-              
+              <strong>Resets: </strong>{this.state.resetCount}
+              <button onClick={this.resetGame}>Reset Game</button>
             </div>
           </div>
 
