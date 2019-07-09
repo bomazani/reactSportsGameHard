@@ -58,7 +58,7 @@ class Game extends React.Component {
 
   shoot = (team) => {
     const teamStatsKey = `${team}TeamStats`
-
+    console.log("teamStatsKey: " + teamStatsKey)
     let score = this.state[teamStatsKey].score;
     this.shotSound.play();
 
